@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
@@ -78,6 +79,39 @@ export const metadata: Metadata = {
   },
 }
 
+/* ── Organization 構造化データ（サイト全体） ── */
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: '株式会社丸義',
+  url: 'https://maruyoshi-official.com',
+  logo: 'https://maruyoshi-official.com/images/logo-header.png',
+  email: 'kenchiro0624@icloud.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '徳丸2-27-14 サンパレス徳丸301',
+    addressLocality: '板橋区',
+    addressRegion: '東京都',
+    postalCode: '175-0082',
+    addressCountry: 'JP',
+  },
+  sameAs: [
+    'https://www.instagram.com/maruyoshi.itabashi/',
+    'https://maruyoshi-official.com',
+  ],
+  description:
+    '東京都板橋区を拠点とする左官・土間コンクリート工事の専門会社。未経験歓迎の正社員採用・協力会社募集を積極展開。',
+  foundingDate: '2025',
+  numberOfEmployees: {
+    '@type': 'QuantitativeValue',
+    value: 10,
+  },
+  areaServed: {
+    '@type': 'State',
+    name: '東京都',
+  },
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -86,6 +120,13 @@ export default function RootLayout({
   return (
     <html lang="ja" className={notoSansJP.className}>
       <body className="antialiased">
+        {/* Organization 構造化データ */}
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+
         <SmoothScrollProvider>
           <CustomCursor />
           <Header />

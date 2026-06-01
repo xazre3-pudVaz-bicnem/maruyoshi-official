@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import { InstagramIcon, INSTAGRAM_URL } from '@/components/ui/InstagramIcon'
 
 const navLinks = [
   { href: '/service',  label: '事業内容',    en: 'SERVICE'  },
@@ -99,7 +100,19 @@ export default function Header() {
           </nav>
 
           {/* ── Desktop CTAs ── */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <div className="hidden lg:flex items-center gap-4 shrink-0">
+            {/* Instagram */}
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="transition-opacity hover:opacity-70"
+              style={{ color: isScrolled ? '#374151' : 'rgba(255,255,255,0.85)' }}
+            >
+              <InstagramIcon size={20} />
+            </a>
+
             <Link href="/partner"
               className="text-[11px] font-black tracking-[0.12em] px-4 py-2.5 transition-all duration-300 whitespace-nowrap"
               style={isScrolled
@@ -211,7 +224,22 @@ export default function Header() {
               </Link>
             </motion.div>
 
-            <p className="pt-8 text-center text-[10px] tracking-widest"
+            {/* Instagram link */}
+            <div className="pt-6 flex justify-center">
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 transition-opacity hover:opacity-70"
+                style={{ color: 'rgba(255,255,255,0.45)' }}
+                onClick={() => setOpen(false)}
+              >
+                <InstagramIcon size={18} />
+                <span className="text-[11px] tracking-widest">@maruyoshi.itabashi</span>
+              </a>
+            </div>
+
+            <p className="pt-5 text-center text-[10px] tracking-widest"
               style={{ color: 'rgba(255,255,255,0.15)' }}>
               © 株式会社丸義
             </p>

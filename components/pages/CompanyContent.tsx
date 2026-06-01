@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { InstagramIcon, INSTAGRAM_URL } from '@/components/ui/InstagramIcon'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const FadeUp = ({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) => (
@@ -17,6 +18,7 @@ const overview = [
   ['採用規模', '10名予定'],
   ['対応エリア', '東京都全域・埼玉県南部・神奈川県北部・千葉県西部（要相談）'],
   ['URL',      'maruyoshi-official.com'],
+  ['Email',    'kenchiro0624@icloud.com'],
 ]
 
 const businesses = [
@@ -45,7 +47,7 @@ export default function CompanyContent() {
                   株式会社丸義は、左官工事・土間コンクリート工事を専門とする建設会社として、令和7年に設立しました。
                 </p>
                 <p>
-                  コンクリートを均し、左官で仕上げる仕事は、地味に見えて実は現場の土台を支える重要な工程です。
+                  コンクリートを均し、職人が手で仕上げる仕事は、地味に見えて実は現場の土台を支える重要な工程です。
                   一打一打に職人としての誇りと責任を持ち、品質・納期・安全を守ることが私たちの使命だと考えています。
                 </p>
                 <p>
@@ -167,7 +169,7 @@ export default function CompanyContent() {
               <h2 className="font-black text-white mb-7" style={{ fontSize: 'clamp(24px,3.5vw,44px)', letterSpacing: '-0.03em' }}>会社の想い</h2>
               <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
                 <p>丸義が大切にするのは、「現場の一打一打に誠実であること」です。</p>
-                <p>コンクリートを均し、左官で仕上げる仕事は、建物の耐久性と美観を左右する重要な工程。妥協のない施工が、使う人の安全と快適を守ります。</p>
+                <p>コンクリートを均し、職人が手で仕上げる仕事は、建物の耐久性と美観を左右する重要な工程。妥協のない施工が、使う人の安全と快適を守ります。</p>
                 <p>板橋区という地域に根ざし、地域の現場・地域の職人・地域の元請けと信頼関係を積み上げることで、長く続く建設会社を目指しています。</p>
               </div>
             </FadeUp>
@@ -183,9 +185,21 @@ export default function CompanyContent() {
             <h2 className="font-black text-gray-900 mb-4" style={{ fontSize: 'clamp(22px,3.5vw,40px)', letterSpacing: '-0.02em' }}>
               お気軽にお問い合わせください
             </h2>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
               <Link href="/recruit" className="btn-black" style={{ justifyContent: 'center', fontSize: 12, padding: '16px 32px' }}>求人情報を見る →</Link>
               <Link href="/contact" className="btn-outline" style={{ justifyContent: 'center', fontSize: 12, padding: '16px 32px' }}>お問い合わせ</Link>
+            </div>
+            {/* Instagram */}
+            <div className="flex justify-center">
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              >
+                <InstagramIcon size={18} />
+                <span>Instagram: @maruyoshi.itabashi</span>
+              </a>
             </div>
           </FadeUp>
         </div>

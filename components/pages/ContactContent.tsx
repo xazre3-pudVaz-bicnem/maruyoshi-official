@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
+import { InstagramIcon, INSTAGRAM_URL } from '@/components/ui/InstagramIcon'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -36,7 +37,7 @@ export default function ContactContent() {
     const body = encodeURIComponent(
       `【種別】${t.label}\n【お名前】${form.name}\n【会社名】${form.company}\n【電話】${form.tel}\n【メール】${form.email}\n\n【内容】\n${form.message}`
     )
-    window.location.href = `mailto:info@maruyoshi-official.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:kenchiro0624@icloud.com?subject=${subject}&body=${body}`
     setSent(true)
   }
 
@@ -154,6 +155,16 @@ export default function ContactContent() {
                   <p>〒175-0082 東京都板橋区徳丸2-27-14 サンパレス徳丸301</p>
                   <p>代表：善平 健志郎　/　設立：令和7年</p>
                 </div>
+                {/* Instagram */}
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                >
+                  <InstagramIcon size={18} />
+                  <span>@maruyoshi.itabashi</span>
+                </a>
               </div>
             </motion.div>
 
@@ -165,8 +176,13 @@ export default function ContactContent() {
                   <path d="M5 14L11 20L23 8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h3 className="text-xl font-black text-gray-900 mb-3">ありがとうございます</h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-8">お問い合わせを受け付けました。<br />2営業日以内にご連絡いたします。</p>
+              <h3 className="text-xl font-black text-gray-900 mb-3">
+                お問い合わせありがとうございました。
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-8">
+                担当者よりご連絡いたします。<br />
+                <span className="text-xs text-gray-400">（2営業日以内を目安にご連絡します）</span>
+              </p>
               <button onClick={() => setSent(false)} className="btn-outline" style={{ fontSize: 11, padding: '12px 24px' }}>
                 別のお問い合わせをする
               </button>

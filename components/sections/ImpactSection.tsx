@@ -78,7 +78,7 @@ export default function ImpactSection() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.2, duration: 0.8, ease }}
         >
-          コンクリートを均し、左官で仕上げる。その一工程一工程に、職人としての誇りと責任を込めています。
+          コンクリートを均し、職人が手で仕上げる。その一工程一工程に、職人としての誇りと責任を込めています。
           丸義は、現場の品質が建物の未来を決めると信じています。
         </motion.p>
 

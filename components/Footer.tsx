@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import LogoBadge from '@/components/ui/LogoBadge'
+import { InstagramIcon, INSTAGRAM_URL } from '@/components/ui/InstagramIcon'
 
 const siteLinks = [
   { href: '/service',  label: '事業内容' },
@@ -48,6 +49,18 @@ export default function Footer() {
                 設立：令和7年（2025年）
               </p>
             </div>
+
+            {/* Instagram */}
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2.5 transition-opacity hover:opacity-70"
+              style={{ color: 'rgba(255,255,255,0.5)' }}
+            >
+              <InstagramIcon size={18} />
+              <span className="text-xs tracking-wide">@maruyoshi.itabashi</span>
+            </a>
           </div>
 
           {/* Site links */}

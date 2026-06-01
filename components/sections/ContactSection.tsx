@@ -29,7 +29,7 @@ export default function ContactSection() {
       `【メールアドレス】${form.email}\n` +
       `【メッセージ】\n${form.message}`
     )
-    window.location.href = `mailto:info@maruyoshi-official.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:kenchiro0624@icloud.com?subject=${subject}&body=${body}`
     setSent(true)
   }
 
@@ -211,10 +211,12 @@ export default function ContactSection() {
                   <path d="M5 14L11 20L23 8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h3 className="text-xl font-black text-gray-900 mb-3">ありがとうございます</h3>
+              <h3 className="text-xl font-black text-gray-900 mb-3">
+                お問い合わせありがとうございました。
+              </h3>
               <p className="text-gray-500 text-sm leading-relaxed">
-                お問い合わせを受け付けました。<br />
-                2営業日以内にご連絡いたします。
+                担当者よりご連絡いたします。<br />
+                <span className="text-xs text-gray-400">（2営業日以内を目安にご連絡します）</span>
               </p>
               <button
                 onClick={() => setSent(false)}
