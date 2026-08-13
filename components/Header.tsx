@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { InstagramIcon, INSTAGRAM_URL } from '@/components/ui/InstagramIcon'
+import { COMPANY, BUSINESS_HOURS } from '@/lib/site'
 
 const navLinks = [
   { href: '/service',  label: '事業内容',    en: 'SERVICE'  },
@@ -65,7 +66,8 @@ export default function Header() {
               alt="株式会社丸義"
               width={1566}
               height={460}
-              quality={95}
+              quality={85}
+              sizes="185px"
               priority
               style={{
                 width:     'clamp(130px, 13vw, 185px)',
@@ -170,7 +172,8 @@ export default function Header() {
                 alt="株式会社丸義"
                 width={1566}
                 height={460}
-                quality={95}
+                quality={85}
+                sizes="130px"
                 style={{
                   width:  130,
                   height: 'auto',
@@ -213,6 +216,17 @@ export default function Header() {
             {/* Mobile CTAs */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.48, duration: 0.45 }} className="space-y-3">
+              {/* 電話導線（モバイルではタップで発信できる） */}
+              <a href={COMPANY.telLink} onClick={() => setOpen(false)}
+                className="block w-full text-center py-4"
+                style={{ border: '1px solid rgba(255,255,255,0.22)' }}>
+                <span className="block text-[9px] font-black tracking-[0.22em] uppercase mb-1"
+                  style={{ color: 'rgba(255,255,255,0.35)' }}>Tel</span>
+                <span className="block text-lg font-black text-white tracking-wide">{COMPANY.tel}</span>
+                <span className="block text-[10px] mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                  {BUSINESS_HOURS.display}（{BUSINESS_HOURS.daysDisplay}）
+                </span>
+              </a>
               <Link href="/recruit" onClick={() => setOpen(false)}
                 className="block w-full text-center bg-white text-gray-900 font-black py-4 tracking-widest text-sm">
                 求人に応募する →

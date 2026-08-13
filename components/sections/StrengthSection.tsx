@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { useRef, useEffect, useState } from 'react'
+import CountUpStat from '@/components/ui/CountUpStat'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -30,50 +30,6 @@ const strengths = [
     desc: '一人親方・法人問わず、誠実なパートナーシップを重視。継続案件の相談にも対応し、品質とコミュニケーションを大切にする方を歓迎します。',
   },
 ]
-
-function useCountUp(target: number, duration: number, trigger: boolean) {
-  const [value, setValue] = useState(0)
-  useEffect(() => {
-    if (!trigger) return
-    let start: number | null = null
-    const step = (timestamp: number) => {
-      if (!start) start = timestamp
-      const progress = Math.min((timestamp - start) / (duration * 1000), 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setValue(Math.round(eased * target))
-      if (progress < 1) requestAnimationFrame(step)
-    }
-    requestAnimationFrame(step)
-  }, [target, duration, trigger])
-  return value
-}
-
-function StatCard({ value, unit, label }: { value: number; unit: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [triggered, setTriggered] = useState(false)
-  const count = useCountUp(value, 1.6, triggered)
-
-  useEffect(() => {
-    if (!ref.current) return
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setTriggered(true); obs.disconnect() } },
-      { threshold: 0.5 }
-    )
-    obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [])
-
-  return (
-    <div ref={ref} className="text-center">
-      <div className="font-black leading-none mb-1 counter-num"
-        style={{ fontSize: 'clamp(36px, 5vw, 60px)', letterSpacing: '-0.04em', color: '#0d0d0d' }}>
-        {count}
-        <span className="text-base ml-0.5">{unit}</span>
-      </div>
-      <div className="text-xs text-gray-400 tracking-wide">{label}</div>
-    </div>
-  )
-}
 
 export default function StrengthSection() {
   return (
@@ -109,10 +65,10 @@ export default function StrengthSection() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease }}
         >
-          <StatCard value={128} unit="日" label="年間休日" />
-          <StatCard value={10}  unit="名" label="採用予定人数" />
-          <StatCard value={10}  unit="h" label="月平均残業" />
-          <StatCard value={3}   unit="ヶ月" label="試用期間" />
+          <CountUpStat value={128} unit="日" label="年間休日" />
+          <CountUpStat value={10}  unit="名" label="採用予定人数" />
+          <CountUpStat value={10}  unit="h" label="月平均残業" />
+          <CountUpStat value={3}   unit="ヶ月" label="試用期間" />
         </motion.div>
 
         {/* Strength cards */}

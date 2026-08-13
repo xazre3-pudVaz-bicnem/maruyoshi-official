@@ -1,148 +1,146 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import PageHero from '@/components/PageHero'
+import Breadcrumbs from '@/components/Breadcrumbs'
+import JsonLd from '@/components/ui/JsonLd'
 import RecruitContent from '@/components/pages/RecruitContent'
+import { canonical, OG_IMAGE, COMPANY, LOGO_URL, JOB, SITE_URL } from '@/lib/site'
+import { postalAddress, ORG_ID, faqSchema } from '@/lib/schema'
+import { RECRUIT_FAQS } from '@/lib/faqs'
 
-/* ─── SEO ─── */
+const title = '左官・土間コンクリート求人｜東京都板橋区'
+const description =
+  '東京都板橋区の株式会社丸義が左官・土間コンクリート作業員を募集しています。未経験歓迎・学歴年齢不問、月給197,000円〜、週休2日制・年間休日128日。仕事内容から入社後の流れまで掲載しています。'
+
 export const metadata: Metadata = {
-  title: '株式会社丸義｜左官・土間コンクリート作業員募集｜東京都板橋区',
-  description:
-    '東京都板橋区の株式会社丸義では左官・土間コンクリート作業員を募集しています。未経験歓迎・学歴不問・週休二日制・年間休日128日。月給197,000円〜。社宅あり・社会保険完備。',
-  keywords: [
-    '東京 左官 求人',
-    '土間コンクリート 求人',
-    '板橋区 建設 求人',
-    '未経験 左官 正社員',
-    '建設業 未経験歓迎',
-    '株式会社丸義 採用',
-    '左官工事 正社員 東京',
-    '土間コンクリート 作業員 板橋',
-  ],
+  title,
+  description,
+  alternates: { canonical: canonical('/recruit') },
   openGraph: {
-    title: '株式会社丸義｜左官・土間コンクリート作業員募集｜東京都板橋区',
-    description:
-      '東京都板橋区の株式会社丸義では左官・土間コンクリート作業員を募集。未経験歓迎・学歴不問・週休二日制・年間休日128日。',
-    url: 'https://maruyoshi-official.com/recruit',
+    type: 'article',
+    url: canonical('/recruit'),
+    title: `${title}｜株式会社丸義`,
+    description,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: '株式会社丸義 求人募集' }],
   },
-  alternates: {
-    canonical: 'https://maruyoshi-official.com/recruit',
+  twitter: {
+    card: 'summary_large_image',
+    title: `${title}｜株式会社丸義`,
+    description,
+    images: [OG_IMAGE],
   },
 }
 
-/* ─── Google for Jobs: JobPosting 構造化データ ─── */
+/**
+ * Google for Jobs — JobPosting 構造化データ。
+ *
+ * 【運用上の注意】
+ * - このページは「単一求人の詳細ページ」であり、JobPosting はここにのみ出力する。
+ *   トップページや一覧ページには付けない。
+ * - datePosted は求人情報を掲載・更新した日。募集を継続する場合は定期的に更新する。
+ * - validThrough は募集期限が定まっていないため出力しない（架空の期限を作らない）。
+ * - 募集を終了した場合は、このページから JobPosting を削除するか
+ *   ページ自体を noindex にすること。期限切れ求人を残さない。
+ * - directApply は、応募がこのサイト上で完結する場合にのみ true にできる。
+ *   現在はメールでの応募受付のため出力しない。
+ * - 記載内容はすべて画面上にも表示されている必要がある。
+ *   条件を変更する際は lib/site.ts の JOB と RecruitContent の両方を更新すること。
+ */
+const RECRUIT_UPDATED = '2026-08-13'
+
 const jobPostingSchema = {
   '@context': 'https://schema.org',
   '@type': 'JobPosting',
 
-  /* 基本情報 */
-  title: '左官・土間コンクリート作業員',
+  title: JOB.title,
   description:
-    'コンクリートの打設・均し・押えおよび左官工事全般を担当していただきます。' +
-    '未経験・学歴・年齢は一切不問。入社後OJTで丁寧に指導します。' +
-    '年間休日128日・週休2日制・月平均残業10時間以内の働きやすい環境です。',
+    '<p>コンクリートの打設・均し・押え、および左官工事全般を担当していただきます。' +
+    '経験・学歴・年齢は不問です。入社後は先輩職人が現場に同行し、材料の運搬や練り、' +
+    '均しの補助といった作業から段階的に指導します。</p>' +
+    '<p>就業時間は8:00〜17:00（休憩60分）、時間外労働は月平均10時間程度です。' +
+    '土日祝休みの週休2日制、年間休日128日。単身用社宅の相談も可能です。</p>',
 
-  /* 掲載期間 */
-  datePosted: '2025-06-01',
-  validThrough: '2026-12-31T23:59',
+  datePosted: RECRUIT_UPDATED,
 
-  /* 雇用形態 */
-  employmentType: 'FULL_TIME',
+  employmentType: JOB.employmentType,
 
-  /* 採用企業 */
   hiringOrganization: {
     '@type': 'Organization',
-    name: '株式会社丸義',
-    sameAs: 'https://maruyoshi-official.com',
-    logo: 'https://maruyoshi-official.com/images/logo-header.png',
-    email: 'kenchiro0624@icloud.com',
+    '@id': ORG_ID,
+    name: COMPANY.name,
+    url: `${SITE_URL}/`,
+    logo: LOGO_URL,
+    sameAs: COMPANY.instagram,
+    email: COMPANY.email,
+    telephone: COMPANY.telIntl,
   },
 
-  /* 勤務地 */
   jobLocation: {
     '@type': 'Place',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '徳丸2-27-14 サンパレス徳丸301',
-      addressLocality: '板橋区',
-      addressRegion: '東京都',
-      postalCode: '175-0082',
-      addressCountry: 'JP',
-    },
+    address: postalAddress,
   },
 
-  /* 給与 */
+  // 画面表示「月給197,000円〜」と一致させる（下限のみ提示のため minValue を使用）
   baseSalary: {
     '@type': 'MonetaryAmount',
     currency: 'JPY',
     value: {
       '@type': 'QuantitativeValue',
-      minValue: 197000,
+      minValue: JOB.salaryMonthlyMin,
       unitText: 'MONTH',
     },
   },
 
-  /* 勤務時間 */
-  workHours: '8:00〜17:00（休憩60分）',
+  workHours: JOB.workHours,
 
-  /* 応募資格 */
-  qualifications: '普通自動車運転免許（あれば尚可・必須ではありません）',
+  qualifications: '普通自動車運転免許（あれば尚可。必須ではありません）',
   educationRequirements: {
     '@type': 'EducationalOccupationalCredential',
     credentialCategory: '不問',
   },
-  experienceRequirements: '不問（未経験者大歓迎）',
-
-  /* 応募方法 */
-  applicationContact: {
-    '@type': 'ContactPoint',
-    contactType: 'hiring',
-    email: 'kenchiro0624@icloud.com',
-    url: 'https://maruyoshi-official.com/contact?type=recruit',
+  experienceRequirements: {
+    '@type': 'OccupationalExperienceRequirements',
+    monthsOfExperience: 0,
   },
 
-  /* 福利厚生 */
-  jobBenefits:
-    '社会保険完備（雇用・労災・健康・厚生年金）' +
-    '、通勤手当（月20,000円まで）' +
-    '、賞与あり（年2回）' +
-    '、昇給あり' +
-    '、単身用社宅あり（要相談）',
-
-  /* 業務内容 */
   responsibilities:
-    'コンクリートの打設・均し・押え作業、左官工事全般（モルタル仕上げ・防水施工など）',
+    'コンクリートの打設・均し・押え作業、左官工事全般（モルタル仕上げ・下地調整など）',
 
-  /* URL */
-  url: 'https://maruyoshi-official.com/recruit',
+  jobBenefits:
+    '社会保険完備（雇用保険・労災保険・健康保険・厚生年金）、通勤手当（月20,000円まで）、賞与年2回、昇給あり、単身用社宅あり（要相談）',
 
-  /* 職種カテゴリ */
-  occupationalCategory: '建設業・職人',
-
-  /* 詳細情報 */
+  totalJobOpenings: JOB.hiringCount,
   industry: '建設業',
+  occupationalCategory: '左官・土間コンクリート工',
+
+  applicationContact: {
+    '@type': 'ContactPoint',
+    contactType: '採用担当',
+    telephone: COMPANY.telIntl,
+    email: COMPANY.email,
+    url: canonical('/contact?type=recruit'),
+  },
+
+  url: canonical('/recruit'),
   identifier: {
     '@type': 'PropertyValue',
-    name: '株式会社丸義',
-    value: 'maruyoshi-recruit-2025',
+    name: COMPANY.name,
+    value: 'maruyoshi-sakan-doma-fulltime',
   },
 }
 
 export default function RecruitPage() {
   return (
     <>
-      {/* Google for Jobs 構造化データ */}
-      <Script
-        id="job-posting-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
-      />
+      <JsonLd id="job-posting-schema" data={jobPostingSchema} />
+      <JsonLd id="recruit-faq-schema" data={faqSchema(RECRUIT_FAQS)} />
 
       <PageHero
         label="RECRUIT"
-        title="求人募集"
+        title="左官・土間コンクリート作業員 募集"
         titleSub="未経験歓迎・正社員採用"
-        desc="経験・学歴・年齢は問いません。一緒に現場で手に職をつけましょう。"
+        desc="経験・学歴・年齢は問いません。東京都板橋区の株式会社丸義で、一緒に現場で手に職をつけましょう。"
       />
+      <Breadcrumbs crumbs={[{ name: '求人募集', path: '/recruit' }]} />
       <RecruitContent />
     </>
   )

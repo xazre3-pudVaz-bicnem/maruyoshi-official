@@ -31,10 +31,11 @@ export default function HeroSection() {
       >
         <Image
           src="/images/hero.jpg"
-          alt="土間コンクリート施工現場"
+          alt="打設したコンクリートを均す土間工事の施工現場"
           fill
           priority
-          quality={92}
+          quality={82}
+          fetchPriority="high"
           className="object-cover object-center"
           sizes="100vw"
         />
@@ -90,7 +91,8 @@ export default function HeroSection() {
                 width={1566}
                 height={460}
                 priority
-                quality={95}
+                quality={85}
+                sizes="240px"
                 style={{
                   width:      'clamp(160px, 18vw, 240px)',
                   height:     'auto',
@@ -101,13 +103,13 @@ export default function HeroSection() {
               />
             </motion.div>
 
-            {/* Main heading */}
-            <div style={{ lineHeight: 1.06 }}>
+            {/* Main heading — ページの主題として h1 は1つ */}
+            <h1 style={{ lineHeight: 1.06 }}>
               {[
                 { text: '現場を仕上げる、', delay: 0.45 },
                 { text: '技術で応える。',   delay: 0.60 },
               ].map((line, i) => (
-                <div key={i} className="overflow-hidden">
+                <span key={i} className="block overflow-hidden">
                   <motion.span
                     className="block font-black text-white"
                     style={{
@@ -121,39 +123,41 @@ export default function HeroSection() {
                   >
                     {line.text}
                   </motion.span>
-                </div>
+                </span>
               ))}
-            </div>
 
-            {/* Sub line */}
-            <motion.div
-              className="mt-8 mb-10"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.85, duration: 0.8, ease }}
-            >
-              <div className="flex items-start gap-4">
+              <motion.span
+                className="mt-8 flex items-start gap-4"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.85, duration: 0.8, ease }}
+              >
                 <span className="block w-5 h-px mt-[11px] shrink-0"
                   style={{ background: 'rgba(255,255,255,0.55)' }} />
-                <div>
-                  <p className="font-bold text-white leading-snug"
-                    style={{
-                      fontSize: 'clamp(13px, 1.5vw, 16px)',
-                      letterSpacing: '0.05em',
-                      textShadow: '0 1px 8px rgba(0,0,0,0.6)',
-                    }}>
-                    左官・土間コンクリート工事のプロフェッショナル
-                  </p>
-                  <p className="text-sm leading-relaxed mt-1.5"
-                    style={{
-                      color: 'rgba(255,255,255,0.65)',
-                      textShadow: '0 1px 6px rgba(0,0,0,0.5)',
-                    }}>
-                    東京都板橋区を拠点に、確かな技術と誠実な施工で現場を支えます。
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+                <span className="block font-bold text-white leading-snug"
+                  style={{
+                    fontSize: 'clamp(13px, 1.5vw, 16px)',
+                    letterSpacing: '0.05em',
+                    textShadow: '0 1px 8px rgba(0,0,0,0.6)',
+                  }}>
+                  東京都板橋区の左官工事・土間コンクリート工事
+                </span>
+              </motion.span>
+            </h1>
+
+            {/* Sub line */}
+            <motion.p
+              className="text-sm leading-relaxed mt-1.5 mb-10 ml-9"
+              style={{
+                color: 'rgba(255,255,255,0.65)',
+                textShadow: '0 1px 6px rgba(0,0,0,0.5)',
+              }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.8, ease }}
+            >
+              コンクリートの打設・均し・押えまで一貫施工。確かな技術と誠実な仕事で現場を支えます。
+            </motion.p>
 
             {/* Tags */}
             <motion.div

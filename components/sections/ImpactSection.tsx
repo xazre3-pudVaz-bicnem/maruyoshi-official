@@ -7,19 +7,20 @@ import LogoBadge from '@/components/ui/LogoBadge'
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
 export default function ImpactSection() {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const imgY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%'])
 
   return (
-    <div ref={ref} className="relative overflow-hidden" style={{ height: 480 }}>
+    <section ref={ref} aria-label="丸義の施工に対する考え方" className="relative overflow-hidden" style={{ height: 480 }}>
       {/* Parallax photo */}
       <motion.div className="absolute inset-0" style={{ y: imgY, scale: 1.12 }}>
         <Image
           src="/images/hero.jpg"
-          alt="施工現場"
+          alt=""
+          aria-hidden="true"
           fill
-          quality={80}
+          quality={82}
           className="object-cover object-center"
           sizes="100vw"
         />
@@ -94,6 +95,6 @@ export default function ImpactSection() {
         </motion.div>
 
       </div>
-    </div>
+    </section>
   )
 }

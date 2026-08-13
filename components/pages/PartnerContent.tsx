@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { PARTNER_FAQS as faqs } from '@/lib/faqs'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -102,14 +103,6 @@ const areas = [
   { name: '神奈川県北部', note: '' },
   { name: '千葉県西部',   note: '' },
   { name: 'その他エリア', note: '（要相談）' },
-]
-
-const faqs = [
-  { q: '一人親方でも相談できますか？', a: 'もちろんです。規模は問いません。一人親方の方も多数ご協力いただいています。まずはお気軽にご連絡ください。' },
-  { q: '単発・スポット案件のみでも可能ですか？', a: 'はい、可能です。継続取引が理想ですが、まずはスポット案件から始めることも歓迎しています。' },
-  { q: '対応エリアはどこですか？', a: '東京都全域を基本とし、埼玉・神奈川・千葉の一部エリアにも対応しています。詳しくはお問い合わせください。' },
-  { q: '請求・支払いサイクルはどうなりますか？', a: '月末締め翌月末払いを基本としています。詳細はご相談の上で決定します。' },
-  { q: '未経験の業種でも声をかけてもらえますか？', a: '左官・土間コンクリートの経験者を優先しますが、隣接業種（型枠・土工など）の方もお気軽にご相談ください。' },
 ]
 
 export default function PartnerContent() {

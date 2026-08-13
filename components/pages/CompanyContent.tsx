@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { InstagramIcon, INSTAGRAM_URL } from '@/components/ui/InstagramIcon'
+import { ADDRESS, COMPANY, BUSINESS_HOURS } from '@/lib/site'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const FadeUp = ({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) => (
@@ -13,12 +14,14 @@ const overview = [
   ['会社名',   '株式会社丸義'],
   ['代表者',   '善平 健志郎'],
   ['設立',     '令和7年（2025年）'],
-  ['所在地',   '〒175-0082 東京都板橋区徳丸2-27-14 サンパレス徳丸301'],
-  ['事業内容', 'コンクリートの打設・均し・押え／左官工事／土間コンクリート工事'],
+  ['所在地',   ADDRESS.full],
+  ['電話番号', COMPANY.tel],
+  ['受付時間', `${BUSINESS_HOURS.display}（${BUSINESS_HOURS.daysDisplay}）※現場の工程により前後する場合があります`],
+  ['事業内容', COMPANY.business],
   ['採用規模', '10名予定'],
   ['対応エリア', '東京都全域・埼玉県南部・神奈川県北部・千葉県西部（要相談）'],
-  ['URL',      'maruyoshi-official.com'],
-  ['Email',    'kenchiro0624@icloud.com'],
+  ['URL',      'www.maruyoshi-official.com'],
+  ['Email',    COMPANY.email],
 ]
 
 const businesses = [

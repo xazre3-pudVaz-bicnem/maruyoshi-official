@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { COMPANY, BUSINESS_HOURS } from '@/lib/site'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -59,6 +60,19 @@ export default function ContactSection() {
           <p className="mt-4 text-gray-500 text-sm sm:text-base">
             採用応募・協力会社の相談・工事依頼など、お気軽にご連絡ください。
           </p>
+
+          {/* 電話導線 */}
+          <div className="mt-8 inline-block px-7 py-5" style={{ border: '1px solid rgba(0,0,0,0.12)' }}>
+            <span className="block text-[10px] font-black tracking-[0.28em] uppercase text-gray-400 mb-1">Tel</span>
+            <a href={COMPANY.telLink}
+              className="block font-black text-gray-900 tracking-wide hover:opacity-70 transition-opacity"
+              style={{ fontSize: 'clamp(24px, 4vw, 34px)', letterSpacing: '-0.01em' }}>
+              {COMPANY.tel}
+            </a>
+            <span className="block text-xs text-gray-400 mt-1.5">
+              受付 {BUSINESS_HOURS.display}（{BUSINESS_HOURS.daysDisplay}）
+            </span>
+          </div>
         </motion.div>
 
         <AnimatePresence mode="wait">

@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import LogoBadge from '@/components/ui/LogoBadge'
+import { ADDRESS, COMPANY, BUSINESS_HOURS } from '@/lib/site'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -8,10 +9,12 @@ const info = [
   { label: '会社名',   value: '株式会社丸義' },
   { label: '代表者',   value: '善平 健志郎' },
   { label: '設立',     value: '令和7年（2025年）' },
-  { label: '所在地',   value: '〒175-0082　東京都板橋区徳丸2-27-14 サンパレス徳丸301' },
-  { label: '事業内容', value: 'コンクリートの打設・均し・押え／左官工事／土間コンクリート工事' },
+  { label: '所在地',   value: ADDRESS.full },
+  { label: '電話番号', value: COMPANY.tel },
+  { label: '受付時間', value: `${BUSINESS_HOURS.display}（${BUSINESS_HOURS.daysDisplay}）` },
+  { label: '事業内容', value: COMPANY.business },
   { label: '採用規模', value: '10名予定' },
-  { label: 'URL',      value: 'maruyoshi-official.com' },
+  { label: 'URL',      value: 'www.maruyoshi-official.com' },
 ]
 
 export default function CompanySection() {

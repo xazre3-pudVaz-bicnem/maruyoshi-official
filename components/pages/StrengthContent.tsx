@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { useRef, useEffect, useState } from 'react'
+import CountUpStat from '@/components/ui/CountUpStat'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const FadeUp = ({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) => (
@@ -9,44 +9,8 @@ const FadeUp = ({ children, delay = 0, className = '' }: { children: React.React
     viewport={{ once: true, margin: '-60px' }} transition={{ delay, duration: 0.75, ease }}>{children}</motion.div>
 )
 
-function useCountUp(target: number, trigger: boolean) {
-  const [v, setV] = useState(0)
-  useEffect(() => {
-    if (!trigger) return
-    let start: number | null = null
-    const step = (ts: number) => {
-      if (!start) start = ts
-      const p = Math.min((ts - start) / 1600, 1)
-      setV(Math.round((1 - Math.pow(1 - p, 3)) * target))
-      if (p < 1) requestAnimationFrame(step)
-    }
-    requestAnimationFrame(step)
-  }, [target, trigger])
-  return v
-}
-
-function Counter({ value, unit, label }: { value: number; unit: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [go, setGo] = useState(false)
-  const count = useCountUp(value, go)
-  useEffect(() => {
-    if (!ref.current) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setGo(true); obs.disconnect() } }, { threshold: 0.5 })
-    obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [])
-  return (
-    <div ref={ref} className="text-center">
-      <div className="font-black leading-none mb-1 counter-num" style={{ fontSize: 'clamp(40px,5vw,64px)', letterSpacing: '-0.04em', color: '#0d0d0d' }}>
-        {count}<span className="text-base ml-0.5">{unit}</span>
-      </div>
-      <div className="text-xs text-gray-400 tracking-wide">{label}</div>
-    </div>
-  )
-}
-
 const strengths = [
-  { num: '01', title: '確かな施工品質', en: 'Quality First', desc: '左官・土間コンクリートに特化することで、汎用工事業者では実現しにくい精度と仕上がりを追求。水平精度±2mm以内を標準管理とし、後工程にも配慮した施工を行います。', points: ['レーザーレベル管理', '三段階押え施工', '丁寧な下地処理'] },
+  { num: '01', title: '確かな施工品質', en: 'Quality First', desc: '左官・土間コンクリートに特化することで、汎用工事業者では実現しにくい精度と仕上がりを追求。レーザーレベルで基準を管理し、後工程が問題なく乗る面に仕上げます。', points: ['レーザーレベル管理', '三段階押え施工', '丁寧な下地処理'] },
   { num: '02', title: '現場対応力', en: 'On-site Flexibility', desc: '天候・工程変更・他職種との調整など、現場では毎日予定外のことが起こります。「言われる前に動く」姿勢と豊富な経験で、柔軟かつ迅速に対応します。', points: ['工程変更への即応', '元請けとの密連携', '現場クレーム対応実績'] },
   { num: '03', title: '安全管理の徹底', en: 'Safety Management', desc: '朝礼でのKY活動、整理整頓、保護具の着用など、安全を最優先とした現場運営を行っています。重大事故ゼロを目指し、日々の安全意識を高めています。', points: ['毎日のKY活動', '保護具・防護設備の徹底', '整理整頓の徹底'] },
   { num: '04', title: '納期意識の高さ', en: 'Deadline Commitment', desc: '土間打設は他工種の工程に大きく影響します。打設日・養生期間を厳守し、工程全体の遅延防止に貢献します。工程表に基づいた逆算管理が得意です。', points: ['工程表に基づく逆算', '打設日の厳守', '養生期間の適切な管理'] },
@@ -64,10 +28,10 @@ export default function StrengthContent() {
           <motion.div className="grid grid-cols-2 sm:grid-cols-4 gap-8 py-8 px-6 sm:px-10"
             style={{ background: '#f9f9f9', border: '1px solid rgba(0,0,0,0.06)' }}
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease }}>
-            <Counter value={128} unit="日" label="年間休日" />
-            <Counter value={10}  unit="名" label="採用予定" />
-            <Counter value={10}  unit="h" label="月平均残業" />
-            <Counter value={7}   unit="つ" label="丸義の強み" />
+            <CountUpStat value={128} unit="日" label="年間休日" fontSize="clamp(40px,5vw,64px)" />
+            <CountUpStat value={10}  unit="名" label="採用予定" fontSize="clamp(40px,5vw,64px)" />
+            <CountUpStat value={10}  unit="h" label="月平均残業" fontSize="clamp(40px,5vw,64px)" />
+            <CountUpStat value={7}   unit="つ" label="丸義の強み" fontSize="clamp(40px,5vw,64px)" />
           </motion.div>
         </div>
       </section>

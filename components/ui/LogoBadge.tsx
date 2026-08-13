@@ -62,7 +62,8 @@ export default function LogoBadge({
         width={innerSize}
         height={innerSize}
         priority={priority}
-        quality={95}
+        quality={85}
+        sizes={`${innerSize}px`}
         style={{
           width:       innerSize,
           height:      innerSize,

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import { InstagramIcon, INSTAGRAM_URL } from '@/components/ui/InstagramIcon'
+import { ADDRESS, COMPANY, BUSINESS_HOURS } from '@/lib/site'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -50,9 +51,35 @@ export default function ContactContent() {
           {!sent ? (
             <motion.div key="form" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease }}>
 
+              {/* 電話でのお問い合わせ */}
+              <div className="mb-10 p-6 sm:p-7" style={{ background: '#0d0d0d' }}>
+                <p className="text-[10px] font-black tracking-[0.28em] uppercase mb-3"
+                  style={{ color: 'rgba(255,255,255,0.35)' }}>
+                  Tel
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                  <div>
+                    <a href={COMPANY.telLink}
+                      className="block font-black text-white tracking-wide hover:opacity-80 transition-opacity"
+                      style={{ fontSize: 'clamp(26px, 5vw, 38px)', letterSpacing: '-0.01em' }}>
+                      {COMPANY.tel}
+                    </a>
+                    <p className="text-xs mt-2 leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                      受付時間 {BUSINESS_HOURS.display}（{BUSINESS_HOURS.daysDisplay}）<br />
+                      {BUSINESS_HOURS.note}
+                    </p>
+                  </div>
+                  <a href={COMPANY.telLink}
+                    className="sm:hidden block text-center bg-white text-gray-900 font-black py-4 tracking-widest text-sm">
+                    電話をかける
+                  </a>
+                </div>
+              </div>
+
               {/* Type selector */}
               <div className="mb-10">
-                <p className="text-xs font-bold text-gray-500 mb-4 tracking-widest uppercase">お問い合わせ種別</p>
+                <p className="text-xs font-bold text-gray-500 mb-4 tracking-widest uppercase">フォームでのお問い合わせ</p>
+                <p className="text-xs text-gray-400 mb-4">お問い合わせ種別をお選びください。</p>
                 <div className="grid grid-cols-2 gap-2">
                   {types.map((t) => (
                     <button key={t.id} onClick={() => setType(t.id)}
@@ -151,9 +178,20 @@ export default function ContactContent() {
               <div className="mt-14 pt-10" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
                 <p className="text-[10px] font-black tracking-[0.28em] uppercase text-gray-400 mb-4">Company</p>
                 <div className="text-sm text-gray-500 space-y-1 leading-relaxed">
-                  <p className="font-bold text-gray-900">株式会社丸義</p>
-                  <p>〒175-0082 東京都板橋区徳丸2-27-14 サンパレス徳丸301</p>
-                  <p>代表：善平 健志郎　/　設立：令和7年</p>
+                  <p className="font-bold text-gray-900">{COMPANY.name}</p>
+                  <p>{ADDRESS.full}</p>
+                  <p>代表：{COMPANY.representative}　/　設立：{COMPANY.founded}</p>
+                  <p>
+                    TEL：
+                    <a href={COMPANY.telLink} className="hover:text-gray-900 transition-colors">
+                      {COMPANY.tel}
+                    </a>
+                  </p>
+                  <p>
+                    <a href={`mailto:${COMPANY.email}`} className="hover:text-gray-900 transition-colors">
+                      {COMPANY.email}
+                    </a>
+                  </p>
                 </div>
                 {/* Instagram */}
                 <a

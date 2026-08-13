@@ -358,6 +358,52 @@ img {
   to   { opacity: 1; }
 }
 
+/* ── Skip link（キーボード操作でヘッダーを飛ばす） ── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 300;
+  padding: 12px 20px;
+  background: var(--black);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ── Prose（コラム本文） ── */
+.prose-body p {
+  font-size: 15px;
+  line-height: 2;
+  color: #4b5563;
+}
+@media (min-width: 640px) {
+  .prose-body p { font-size: 16px; }
+}
+.prose-body p + p { margin-top: 1.25em; }
+
+/* ── Motion 配慮 ──
+   prefers-reduced-motion 指定時はアニメーション・スムーススクロールを止める。
+   Framer Motion の inline transform も transition を無効化して初期表示に固定する。 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ticker-track,
+  .ticker-track-rev {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 /* ── Nav link for white-on-photo header ── */
 button.nav-link {
   position: relative;

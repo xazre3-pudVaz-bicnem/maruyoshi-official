@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import JsonLd from '@/components/ui/JsonLd'
 import HeroSection      from '@/components/sections/HeroSection'
 import TickerSection    from '@/components/sections/TickerSection'
 import ImpactSection    from '@/components/sections/ImpactSection'
@@ -8,16 +8,21 @@ import RecruitSection   from '@/components/sections/RecruitSection'
 import PartnerSection   from '@/components/sections/PartnerSection'
 import CompanySection   from '@/components/sections/CompanySection'
 import ContactSection   from '@/components/sections/ContactSection'
+import { organizationSchema, webSiteSchema } from '@/lib/schema'
 
-export const metadata: Metadata = {
-  title: '株式会社丸義｜板橋区の左官・土間コンクリート工事 求人・協力会社募集',
-  description:
-    '東京都板橋区の株式会社丸義。左官工事・土間コンクリート工事の専門会社として、未経験歓迎の正社員求人と協力会社募集を積極展開中。年間休日128日・週休2日・社宅あり。',
-}
+/**
+ * トップページの title / description / canonical は
+ * app/layout.tsx の default 値をそのまま使用する（重複定義を避けるため）。
+ *
+ * Organization と WebSite はサイト全体で1回だけ出力すればよいため、
+ * 全ページ共通の layout ではなくトップページに置いている。
+ */
 
 export default function Home() {
   return (
     <>
+      <JsonLd id="site-schema" data={[organizationSchema, webSiteSchema]} />
+
       {/* ファーストビュー（写真背景） */}
       <HeroSection />
 

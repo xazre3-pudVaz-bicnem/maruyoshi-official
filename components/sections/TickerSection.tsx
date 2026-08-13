@@ -1,20 +1,24 @@
 'use client'
 
-const ITEMS_A = [
-  '左官工事', '土間コンクリート', 'コンクリート打設', '均し・押え', '板橋区',
-  '未経験歓迎', '正社員採用', '協力会社募集', '東京都', '一人親方歓迎',
-]
-const ITEMS_B = [
-  'PLASTERING WORK', 'CONCRETE FLOOR', 'PROFESSIONAL', 'ITABASHI TOKYO',
-  'FULL-TIME STAFF', 'PARTNER WELCOME', 'EST.2025', 'QUALITY FIRST',
-]
+/**
+ * 帯の内容は取り扱う工種を示すブランド演出に留める。
+ * 検索順位を目的としたキーワードの反復列挙は行わない。
+ */
+const ITEMS_A = ['左官工事', '土間コンクリート', 'コンクリート打設', '均し・押え']
+const ITEMS_B = ['PLASTERING WORK', 'CONCRETE FLOOR', 'ITABASHI TOKYO', 'EST.2025']
+
+/** 画面幅を満たすための繰り返し数。track は -50% 移動するため必ず偶数倍にする */
+const fill = (items: string[]) => {
+  const seq = [...items, ...items, ...items]
+  return [...seq, ...seq]
+}
 
 export default function TickerSection() {
-  const repeatA = [...ITEMS_A, ...ITEMS_A]
-  const repeatB = [...ITEMS_B, ...ITEMS_B]
+  const repeatA = fill(ITEMS_A)
+  const repeatB = fill(ITEMS_B)
 
   return (
-    <div className="overflow-hidden" style={{ background: '#0d0d0d', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <div aria-hidden="true" className="overflow-hidden" style={{ background: '#0d0d0d', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       {/* Row A — left scroll */}
       <div className="py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="ticker-track gap-0">

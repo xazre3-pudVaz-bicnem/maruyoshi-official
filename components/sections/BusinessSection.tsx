@@ -7,6 +7,7 @@ const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const items = [
   {
     num: '01',
+    href: '/service/sakan',
     title: '左官工事',
     en: 'Plastering Work',
     desc: 'モルタル・漆喰・石膏などを使用した壁・床・天井の仕上げ工事。熟練の技術と丁寧な施工で、美しく耐久性の高い仕上がりを実現します。',
@@ -14,6 +15,7 @@ const items = [
   },
   {
     num: '02',
+    href: '/service/doma-concrete',
     title: '土間コンクリート工事',
     en: 'Concrete Floor Work',
     desc: '駐車場・倉庫・工場・住宅の床面に強固なコンクリート土間を施工。水平精度と表面品質にこだわった仕上がりが特長です。',
@@ -21,11 +23,19 @@ const items = [
   },
   {
     num: '03',
+    href: '/service/concrete-placement',
     title: 'コンクリート打設・均し・押え',
     en: 'Concrete Placing & Finishing',
     desc: 'コンクリートの打設から均し・押えまでを一貫して施工。確かな知識と経験で、施工品質と納期を守ります。',
     points: ['コンクリート打設', '均し・レベリング', 'トンボ・押え仕上げ'],
   },
+]
+
+/** トップから各詳細ページへ直接到達できるようにする補助リンク */
+const detailLinks = [
+  { href: '/service/screeding-finishing', label: 'コンクリート均し・押え仕上げ' },
+  { href: '/area/itabashi',               label: '板橋区での対応内容' },
+  { href: '/column',                      label: '施工コラム' },
 ]
 
 export default function BusinessSection() {
@@ -82,7 +92,9 @@ export default function BusinessSection() {
                   {item.en}
                 </span>
                 <h3 className="text-lg font-black text-gray-900 leading-snug">
-                  {item.title}
+                  <Link href={item.href} className="hover:underline">
+                    {item.title}
+                  </Link>
                 </h3>
               </div>
 
@@ -104,20 +116,33 @@ export default function BusinessSection() {
                 ))}
               </ul>
 
-              {/* Hover arrow */}
-              <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M2 9H16M10 3L16 9L10 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+              {/* 詳細ページへの導線 */}
+              <div className="mt-6">
+                <Link href={item.href}
+                  className="card-invert-text inline-flex items-center gap-2 text-xs font-black tracking-wider text-gray-900">
+                  {item.title}の詳細を見る
+                  <svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M2 9H16M10 3L16 9L10 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <motion.div className="mt-8" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.7, ease }}>
+        <motion.div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-5" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.7, ease }}>
           <Link href="/service" className="btn-outline" style={{ fontSize: 11, padding: '12px 24px', display: 'inline-flex' }}>
-            事業内容の詳細を見る →
+            事業内容の一覧を見る →
           </Link>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+            {detailLinks.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors">
+                  {l.label} →
+                </Link>
+              </li>
+            ))}
+          </ul>
         </motion.div>
 
       </div>

@@ -2,6 +2,8 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { RECRUIT_FAQS as faqs } from '@/lib/faqs'
+import { ADDRESS, COMPANY, BUSINESS_HOURS } from '@/lib/site'
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -114,27 +116,35 @@ const onboarding = [
   { step: 'STEP 04', title: '独り立ち・昇給',   desc: '現場担当として一連の施工を任されるように。実績に応じた昇給・資格取得支援あり（1年〜）。' },
 ]
 
-const faqs = [
-  { q: '全く経験がなくても大丈夫ですか？',
-    a: 'はい、大丈夫です。入社後はベテラン職人が丁寧に指導します。まずは補助作業から始めるので安心してください。' },
-  { q: '資格は必要ですか？',
-    a: '普通自動車運転免許があれば尚可ですが、必須ではありません。入社後に業務に関連する資格取得を支援します。' },
-  { q: 'どのくらいで一人前になれますか？',
-    a: '個人差がありますが、1〜2年程度で基本的な施工を一人でこなせるようになる方が多いです。' },
-  { q: '社宅・寮はありますか？',
-    a: '単身用の入居可能住宅があります。遠方からの採用も歓迎しています。詳細はお問い合わせください。' },
-  { q: '残業はどのくらいありますか？',
-    a: '月平均10時間程度です。コンクリートの凝固タイミングによって多少延長になる日もありますが、基本的に定時退勤を推奨しています。' },
-  { q: '服装や持ち物はどうすれば？',
-    a: '入社時に必要な作業着・安全靴は会社が準備します。初日から用意していただく必要はありません。' },
-  { q: '女性でも応募できますか？',
-    a: 'はい、歓迎しています。体力に応じた業務を担当いただきますので、ご相談ください。' },
-  { q: '試用期間中の給与はどうなりますか？',
-    a: '試用期間（3ヶ月）中も同じ給与条件です。試用期間終了後、正社員として雇用契約を結びます。' },
+/* 未経験者が最初に担当する仕事 */
+const firstTasks = [
+  { title: '材料・道具の準備と運搬', desc: '生コンや左官材料、鏝・トンボ・スクリードなどの道具を現場へ運び、すぐ使える状態に並べます。どの工程で何を使うかを覚える最初のステップです。' },
+  { title: '材料の練り', desc: '撹拌機でモルタルを練ります。柔らかすぎても硬すぎても作業性と品質に影響するため、練り具合の感覚を体で覚えていきます。' },
+  { title: '均しの補助', desc: 'トンボでコンクリートを広げる、定規（スクリード）の片側を持つといった作業から入ります。先輩と息を合わせて動く感覚を掴む工程です。' },
+  { title: '清掃・片付け', desc: '現場の清掃と道具の手入れです。鏝は使ったまま置くと材料が固着するため、手入れも仕事のうちとして最初に覚えます。' },
+]
+
+/* 使用する工具 */
+const toolList = [
+  { name: '金鏝（かなごて）', desc: '仕上げの押えに使う鏝。押さえる強さと角度で表面の緻密さが変わります。' },
+  { name: '木鏝・プラ鏝', desc: '粗押えの段階で表面を整えるときに使います。' },
+  { name: 'トンボ', desc: '打ち込んだコンクリートを広げてならす、柄の長い道具です。' },
+  { name: 'スクリード（定規）', desc: '面の通りを出すための長い直定規。二人で引くこともあります。' },
+  { name: '機械ごて（トロウェル）', desc: '広い面の押えに使う回転式の仕上げ機械です。' },
+  { name: 'コンクリートバイブレーター', desc: '打設したコンクリートの内部から空気を抜き、すみずみまで充填させます。' },
+  { name: 'レーザーレベル', desc: '仕上げ高さの基準を出し、均し中に高さを確認する測定機器です。' },
+  { name: '撹拌機', desc: 'モルタルなどの材料を均一に練るための機械です。' },
+]
+
+/* 身につく技術 */
+const skillsGained = [
+  { phase: '早い段階で', items: ['材料の種類と適切な練り具合の判断', '道具の扱いと手入れ', '現場の安全ルールとKY活動', '他職種との段取りの取り方'] },
+  { phase: '経験を重ねて', items: ['トンボ・定規による均しとレベル出し', '排水勾配の付け方', '金鏝・機械ごてによる押え仕上げ', '打設時の締固めと充填の判断'] },
+  { phase: '中核として', items: ['気温・風・日照から押えの適期を読む判断力', '打設計画と当日の段取り', '現場全体の工程管理', '若手への指導'] },
 ]
 
 const applySteps = [
-  { step: 'STEP 01', title: 'フォームまたはメールで応募', desc: 'お問い合わせフォームから「求人応募」を選択して送信。または kenchiro0624@icloud.com へ直接メールでもOKです。' },
+  { step: 'STEP 01', title: 'フォーム・電話・メールで応募', desc: `お問い合わせフォームから「求人応募」を選択して送信。お電話（${COMPANY.tel}）やメール（${COMPANY.email}）でも受け付けています。` },
   { step: 'STEP 02', title: '担当者よりご連絡',          desc: '2営業日以内にメールまたはお電話でご連絡します。日程調整やご質問にお答えします。' },
   { step: 'STEP 03', title: '面談（現場見学も可）',      desc: '東京都板橋区の事務所または現場でお会いします。履歴書不要・服装自由・話を聞くだけもOKです。' },
   { step: 'STEP 04', title: '採用・入社日の確定',        desc: '面談後、ご希望に合わせて入社日を決定します。遠方の方は社宅の手配を先行してご相談可能です。' },
@@ -206,6 +216,70 @@ export default function RecruitContent() {
         </div>
       </section>
 
+      {/* ── 未経験者が最初に担当する仕事 ── */}
+      <section className="py-20 lg:py-28" style={{ background: '#f5f5f5' }}>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <FadeUp className="mb-12">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="block w-7 h-px bg-gray-900" />
+              <span className="label">First Steps</span>
+            </div>
+            <h2 className="font-black text-gray-900"
+              style={{ fontSize: 'clamp(28px,4.5vw,52px)', letterSpacing: '-0.03em' }}>
+              未経験者が最初に担当する仕事
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-gray-500 max-w-xl leading-relaxed">
+              入社初日から鏝を持って仕上げを任されることはありません。
+              まずは現場の流れと材料に慣れるところから始めます。
+            </p>
+          </FadeUp>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {firstTasks.map((t, i) => (
+              <FadeUp key={t.title} delay={i * 0.08}>
+                <div className="bg-white p-7 h-full" style={{ border: '1px solid rgba(0,0,0,0.07)' }}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-[10px] font-black tracking-[0.2em] text-gray-300">0{i + 1}</span>
+                    <h3 className="text-base font-black text-gray-900 leading-snug">{t.title}</h3>
+                  </div>
+                  <p className="text-sm text-gray-500 leading-relaxed">{t.desc}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 使用する工具 ── */}
+      <section className="py-20 lg:py-24 relative" style={{ background: '#0d0d0d' }}>
+        <div className="bg-grid-dark absolute inset-0 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
+          <FadeUp className="mb-10">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="block w-7 h-px" style={{ background: 'rgba(255,255,255,0.35)' }} />
+              <span className="label-inv">Tools</span>
+            </div>
+            <h2 className="font-black text-white"
+              style={{ fontSize: 'clamp(28px,4.5vw,52px)', letterSpacing: '-0.03em' }}>
+              使用する工具
+            </h2>
+            <p className="mt-3 text-sm max-w-xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+              入社時に必要な作業着・安全靴は会社が準備します。工具の名前と使い方は現場で覚えていけます。
+            </p>
+          </FadeUp>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px"
+            style={{ background: 'rgba(255,255,255,0.06)' }}>
+            {toolList.map((t, i) => (
+              <FadeUp key={t.name} delay={i * 0.05}>
+                <div className="p-6 h-full" style={{ background: '#0d0d0d' }}>
+                  <dt className="text-sm font-black text-white mb-2">{t.name}</dt>
+                  <dd className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>{t.desc}</dd>
+                </div>
+              </FadeUp>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       {/* ── 1日の流れ ── */}
       <section className="py-20 lg:py-28" style={{ background: '#f5f5f5' }}>
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
@@ -271,6 +345,53 @@ export default function RecruitContent() {
               ))}
             </div>
           </FadeUp>
+        </div>
+      </section>
+
+      {/* ── 勤務地・通勤 ── */}
+      <section className="py-16 lg:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8">
+          <FadeUp className="mb-8">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="block w-7 h-px bg-gray-900" />
+              <span className="label">Location</span>
+            </div>
+            <h2 className="font-black text-gray-900"
+              style={{ fontSize: 'clamp(26px,4vw,44px)', letterSpacing: '-0.03em' }}>
+              勤務地・通勤について
+            </h2>
+          </FadeUp>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <FadeUp>
+              <div className="p-7 h-full" style={{ background: '#f9f9f9', border: '1px solid rgba(0,0,0,0.08)' }}>
+                <h3 className="text-sm font-black text-gray-900 mb-3">勤務地</h3>
+                <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                  東京都内の現場が中心です。現場は日によって変わるため、決まった場所に毎日通う働き方とは異なります。
+                </p>
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  事務所所在地：{ADDRESS.postalCodeDisplay} {ADDRESS.plain}
+                </p>
+              </div>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <div className="p-7 h-full" style={{ background: '#f9f9f9', border: '1px solid rgba(0,0,0,0.08)' }}>
+                <h3 className="text-sm font-black text-gray-900 mb-3">通勤・住まい</h3>
+                <ul className="space-y-2.5">
+                  {[
+                    '通勤手当は月20,000円まで支給します',
+                    '普通自動車運転免許があると現場移動で役立ちます（必須ではありません）',
+                    '単身用社宅があります（要相談）',
+                    '遠方からのご応募も歓迎しています',
+                  ].map((t) => (
+                    <li key={t} className="flex items-start gap-2">
+                      <span className="block w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />
+                      <span className="text-sm text-gray-600 leading-relaxed">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </FadeUp>
+          </div>
         </div>
       </section>
 
@@ -393,6 +514,53 @@ export default function RecruitContent() {
         </div>
       </section>
 
+      {/* ── 身につく技術 ── */}
+      <section className="py-20 lg:py-24 relative" style={{ background: '#0d0d0d' }}>
+        <div className="bg-grid-dark absolute inset-0 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
+          <FadeUp className="mb-10">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="block w-7 h-px" style={{ background: 'rgba(255,255,255,0.35)' }} />
+              <span className="label-inv">Skills</span>
+            </div>
+            <h2 className="font-black text-white"
+              style={{ fontSize: 'clamp(28px,4.5vw,52px)', letterSpacing: '-0.03em' }}>
+              身につく技術
+            </h2>
+            <p className="mt-3 text-sm max-w-xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+              左官・土間の技術は現場でしか身につきません。覚える順序は決まっており、
+              段階を追って任される範囲が広がっていきます。
+            </p>
+          </FadeUp>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-px" style={{ background: 'rgba(255,255,255,0.06)' }}>
+            {skillsGained.map((s, i) => (
+              <FadeUp key={s.phase} delay={i * 0.1}>
+                <div className="p-7 h-full" style={{ background: '#0d0d0d' }}>
+                  <div className="text-[10px] font-black tracking-[0.22em] mb-5"
+                    style={{ color: 'rgba(255,255,255,0.3)' }}>
+                    {s.phase}
+                  </div>
+                  <ul className="space-y-3">
+                    {s.items.map((it) => (
+                      <li key={it} className="flex items-start gap-3">
+                        <span className="block w-3 h-px mt-2.5 shrink-0" style={{ background: 'rgba(255,255,255,0.3)' }} />
+                        <span className="text-sm text-white leading-relaxed">{it}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+          <FadeUp className="mt-8">
+            <Link href="/column/mikeiken-sakan"
+              className="btn-outline-inv" style={{ fontSize: 11, padding: '13px 24px', display: 'inline-flex' }}>
+              未経験から左官職人になるには →
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+
       {/* ── よくある質問 ── */}
       <section className="py-20 lg:py-28" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-3xl mx-auto px-5 sm:px-8">
@@ -482,17 +650,29 @@ export default function RecruitContent() {
           <FadeUp>
             <div className="p-7 sm:p-8" style={{ background: '#f9f9f9', border: '1px solid rgba(0,0,0,0.08)' }}>
               <h3 className="text-sm font-black text-gray-900 mb-5">お問い合わせ先</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div>
+                  <div className="text-xs text-gray-400 mb-1 tracking-widest uppercase">Tel</div>
+                  <a href={COMPANY.telLink}
+                    className="text-base font-black text-gray-900 hover:underline">
+                    {COMPANY.tel}
+                  </a>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {BUSINESS_HOURS.display}（{BUSINESS_HOURS.daysDisplay}）
+                  </p>
+                </div>
                 <div>
                   <div className="text-xs text-gray-400 mb-1 tracking-widest uppercase">Email</div>
-                  <a href="mailto:kenchiro0624@icloud.com"
-                    className="text-sm font-bold text-gray-900 hover:underline">
-                    kenchiro0624@icloud.com
+                  <a href={`mailto:${COMPANY.email}`}
+                    className="text-sm font-bold text-gray-900 hover:underline break-all">
+                    {COMPANY.email}
                   </a>
                 </div>
                 <div>
                   <div className="text-xs text-gray-400 mb-1 tracking-widest uppercase">Address</div>
-                  <p className="text-sm text-gray-700">〒175-0082 東京都板橋区徳丸2-27-14<br />サンパレス徳丸301</p>
+                  <p className="text-sm text-gray-700">
+                    {ADDRESS.postalCodeDisplay} {ADDRESS.region}{ADDRESS.locality}{ADDRESS.street}<br />{ADDRESS.building}
+                  </p>
                 </div>
               </div>
             </div>
@@ -537,14 +717,15 @@ export default function RecruitContent() {
                 }}>
                 応募フォームへ →
               </Link>
-              <a href="mailto:kenchiro0624@icloud.com?subject=【求人応募】"
+              <a href={COMPANY.telLink}
                 className="btn-outline-inv"
                 style={{ justifyContent: 'center', fontSize: 13, padding: '18px 36px' }}>
-                メールで応募する
+                電話で応募する（{COMPANY.tel}）
               </a>
             </div>
-            <p className="mt-8 text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-              お問い合わせ後、2営業日以内にご連絡いたします
+            <p className="mt-8 text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.3)' }}>
+              電話受付：{BUSINESS_HOURS.display}（{BUSINESS_HOURS.daysDisplay}）<br />
+              フォーム・メールでのお問い合わせには、2営業日以内にご連絡いたします
             </p>
           </FadeUp>
         </div>
